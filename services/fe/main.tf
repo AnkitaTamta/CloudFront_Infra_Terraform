@@ -1,0 +1,46 @@
+module "s3_bucket" {
+  source                                  = "../../modules/s3"
+  bucket_name                             = "${lookup(var.bucket_name, "${terraform.workspace}")}"
+  acl                                     = "${var.acl}"
+  region                                  = "${var.region}"
+  cloudfront_access_identity              = "${module.cloudfront.origin_access_identity_arn}"
+}
+
+module "cloudfront" {
+  source                                  = "../../modules/cloudfront"
+  enabled                                 = "${var.enabled}"
+  is_ipv6_enabled                         = "${var.is_ipv6_enabled}"
+  comment                                 = "${lookup(var.comment, "${terraform.workspace}")}"
+  default_root_object                     = "${var.default_root_object}"
+  price_class                             = "${var.price_class}"
+  web_acl_id                              = "${var.web_acl_id}"
+  allowed_methods                         = "${var.allowed_methods}"
+  cached_methods                          = "${var.cached_methods}"
+  query_string                            = "${var.query_string}"
+  forward_cookies                         = "${var.forward_cookies}"
+  geo_restriction_type                    = "${var.geo_restriction_type}"
+  default_ttl                             = "${var.default_ttl}"
+  min_ttl                                 = "${var.min_ttl}"
+  max_ttl                                 = "${var.max_ttl}"
+  alias                                   = "${lookup(var.alias, "${terraform.workspace}")}"
+  http_version                            = "${var.http_version}"
+  bucket_name                             = "${lookup(var.bucket_name,terraform.workspace)}"
+
+  origin_access_identity_comment          = "${lookup(var.origin_access_identity_comment, "${terraform.workspace}")}"
+  log_include_cookies                     = "${var.log_include_cookies}"
+  log_prefix                              = "${lookup(var.log_prefix, "${terraform.workspace}")}"
+  viewer_protocol_policy                  = "${var.viewer_protocol_policy}"
+  viewer_minimum_protocol_version         = "${var.viewer_minimum_protocol_version}"
+  cloudfront_default_certificate          = "${var.cloudfront_default_certificate}"
+  ssl_support_method                      = "${var.ssl_support_method}"
+  iam_certificate_id                      = "${var.iam_certificate_id}"
+
+  costcenter                              = "${var.costcenter}"
+  environment                             = "${lookup(var.environment, "${terraform.workspace}")}"
+  service                                 = "${var.service}"
+  repo_name                               = "${var.repo_name}"
+
+  hosted_zone_id                          = "${var.hosted_zone_id}"
+  domain_name                             = "${var.domain_name}"
+  route53_record_name                     = "${lookup(var.route53_record_name,"${terraform.workspace}")}"
+}
