@@ -7,7 +7,7 @@ This repository contains
 
 Terraform will deploy from Jenkins.
 
-Prerequiste
+Prerequisite
 
 - AWS access key and AWS secret key should be added in Jenkins as a Credentials with below name.
   access_key_tf
